@@ -12,11 +12,7 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Completed
 
-- None.
-
-## In Progress
-
-- None.
+- Design system and UI primitive components
 
 ## Next Up
 
