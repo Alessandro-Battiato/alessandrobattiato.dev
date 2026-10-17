@@ -1,7 +1,13 @@
+import { Navbar } from './components/Navbar/Navbar';
+import { Hero } from './components/Hero/Hero';
+
 function App() {
   return (
-    <div>Alessandro Battiato</div>
-  )
+    <>
+      <Navbar />
+      <Hero />
+    </>
+  );
 }
 
-export default App
+export default App;

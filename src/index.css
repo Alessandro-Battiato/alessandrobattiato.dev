@@ -2,98 +2,91 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
-    --radius: 0.5rem;
-    
-    /* Semantic color tokens according to UI context */
-    --surface: 0 0% 100%;
-    --surface-elevated: 0 0% 100%;
-    --surface-subtle: 0 0% 96.1%;
-    --border-subtle: 0 0% 89.8%;
-    --text-primary: 0 0% 3.9%;
-    --text-secondary: 0 0% 15%;
-    --text-muted: 0 0% 45.1%;
-    --text-faint: 0 0% 70%;
-    --accent: 36 88 172; /* #2563EB */
-    --accent-hover: 36 88 172;
-    --accent-soft: 217 221 226;
-    --accent-secondary: 34 92 140;
-    --focus-ring: 36 88 172;
-    
-    /* Brand colors */
-    --brand-primary: 0 0% 7%;
-    --brand-accent: 36 88 172;
-    --brand-neutral: 138 143 152;
-  }
+:root {
+  --background: 0 0% 100%;
+  --foreground: 20 14.3% 4.1%;
+  --border: 200 2.5% 77.5%;
+  --accent: 212 87% 59%;
+  --muted-foreground: 20 4.2% 54%;
+  --card: 0 0% 100%;
+  --card-foreground: 20 14.3% 4.1%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 20 14.3% 4.1%;
+  --primary: 20 14.3% 4.1%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 200 11% 85%;
+  --secondary-foreground: 20 14.3% 4.1%;
+  --destructive: 0 72.2% 50.6%;
+  --destructive-foreground: 0 0% 100%;
+  --muted: 200 11% 85%;
+  --ring: 212 87% 59%;
+  --radius: 0.5rem;
+  
+  --font-sans: 'Inter', sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
 
-  .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
-    
-    /* Semantic color tokens according to UI context */
-    --surface: 0 0% 3.9%;
-    --surface-elevated: 0 0% 5.9%;
-    --surface-subtle: 0 0% 14.9%;
-    --border-subtle: 0 0% 14.9%;
-    --text-primary: 0 0% 98%;
-    --text-secondary: 0 0% 85%;
-    --text-muted: 0 0% 63.9%;
-    --text-faint: 0 0% 40%;
-    --accent: 36 88 172; /* #2563EB */
-    --accent-hover: 36 88 172;
-    --accent-soft: 36 88 172;
-    --accent-secondary: 34 92 140;
-    --focus-ring: 36 88 172;
-    
-    /* Brand colors */
-    --brand-primary: 0 0% 98%;
-    --brand-accent: 36 88 172;
-    --brand-neutral: 138 143 152;
-  }
+.dark {
+  --background: 15 14.1% 4.1%;
+  --foreground: 60 9.1% 97.1%;
+  --card: 20 14.3% 4.1%;
+  --card-foreground: 60 9.1% 97.1%;
+  --popover: 20 14.3% 4.1%;
+  --popover-foreground: 60 9.1% 97.1%;
+  --primary: 60 9.1% 97.1%;
+  --primary-foreground: 20 14.3% 4.1%;
+  --secondary: 20 14.3% 16.9%;
+  --secondary-foreground: 60 9.1% 97.1%;
+  --muted: 20 14.3% 16.9%;
+  --muted-foreground: 60 9.1% 76.7%;
+  --border: 20 14.3% 16.9%;
+  --ring: 212 87% 59%;
 }
 
 @layer base {
   * {
-    @apply border-border;
+    border-color: hsl(var(--border));
   }
   body {
-    @apply bg-background text-foreground;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: var(--font-sans);
+  }
+  .text-accent {
+    color: hsl(var(--accent));
+  }
+  .bg-background {
+    background-color: hsl(var(--background));
+  }
+  .text-foreground {
+    color: hsl(var(--foreground));
+  }
+  .bg-border {
+    background-color: hsl(var(--border));
+  }
+  .bg-accent {
+    background-color: hsl(var(--accent));
+  }
+  .text-muted-foreground {
+    color: hsl(var(--muted-foreground));
+  }
+  .bg-secondary {
+    background-color: hsl(var(--secondary));
+  }
+  .text-secondary-foreground {
+    color: hsl(var(--secondary-foreground));
+  }
+  .backdrop-blur-sm {
+    backdrop-filter: blur(4px);
+  }
+  .font-serif {
+    font-family: var(--font-serif);
+  }
+  .font-sans {
+    font-family: var(--font-sans);
+  }
+  .font-mono {
+    font-family: var(--font-mono);
   }
 }
