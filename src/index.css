@@ -1,99 +1,98 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
-    --radius: 0.5rem;
-    
-    /* Semantic color tokens according to UI context */
-    --surface: 0 0% 100%;
-    --surface-elevated: 0 0% 100%;
-    --surface-subtle: 0 0% 96.1%;
-    --border-subtle: 0 0% 89.8%;
-    --text-primary: 0 0% 3.9%;
-    --text-secondary: 0 0% 15%;
-    --text-muted: 0 0% 45.1%;
-    --text-faint: 0 0% 70%;
-    --accent: 36 88 172; /* #2563EB */
-    --accent-hover: 36 88 172;
-    --accent-soft: 217 221 226;
-    --accent-secondary: 34 92 140;
-    --focus-ring: 36 88 172;
-    
-    /* Brand colors */
-    --brand-primary: 0 0% 7%;
-    --brand-accent: 36 88 172;
-    --brand-neutral: 138 143 152;
-  }
+@custom-variant dark (&:where(.dark, .dark *));
 
-  .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
-    
-    /* Semantic color tokens according to UI context */
-    --surface: 0 0% 3.9%;
-    --surface-elevated: 0 0% 5.9%;
-    --surface-subtle: 0 0% 14.9%;
-    --border-subtle: 0 0% 14.9%;
-    --text-primary: 0 0% 98%;
-    --text-secondary: 0 0% 85%;
-    --text-muted: 0 0% 63.9%;
-    --text-faint: 0 0% 40%;
-    --accent: 36 88 172; /* #2563EB */
-    --accent-hover: 36 88 172;
-    --accent-soft: 36 88 172;
-    --accent-secondary: 34 92 140;
-    --focus-ring: 36 88 172;
-    
-    /* Brand colors */
-    --brand-primary: 0 0% 98%;
-    --brand-accent: 36 88 172;
-    --brand-neutral: 138 143 152;
-  }
+/* Semantic theme tokens: light values in :root, dark overrides in .dark */
+:root {
+  --background: #f7f7f5;
+  --surface: #ffffff;
+  --surface-elevated: #ffffff;
+  --surface-subtle: #efefec;
+  --border: #e0e1e4;
+  --border-subtle: #ebecee;
+  --text-primary: #0d0e11;
+  --text-secondary: #3a3e46;
+  --text-muted: #5c616a;
+  --text-faint: #a3a7ae;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-soft: #e6eefd;
+  --accent-secondary: #ea580c;
+  --focus-ring: #2563eb;
+  --status-available: #16a34a;
+}
+
+.dark {
+  --background: #0d0e11;
+  --surface: #13151a;
+  --surface-elevated: #191c22;
+  --surface-subtle: #111318;
+  --border: #23262e;
+  --border-subtle: #1a1d23;
+  --text-primary: #f2f4f8;
+  --text-secondary: #c3c7cf;
+  --text-muted: #8a8f98;
+  --text-faint: #4b5059;
+  --accent: #5b93f5;
+  --accent-hover: #7ea9f7;
+  --accent-soft: #14213b;
+  --accent-secondary: #f97316;
+  --focus-ring: #5b93f5;
+  --status-available: #22c55e;
+}
+
+@theme {
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-surface-subtle: var(--surface-subtle);
+  --color-border: var(--border);
+  --color-border-subtle: var(--border-subtle);
+  --color-copy-primary: var(--text-primary);
+  --color-copy-secondary: var(--text-secondary);
+  --color-copy-muted: var(--text-muted);
+  --color-copy-faint: var(--text-faint);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-secondary: var(--accent-secondary);
+  --color-focus-ring: var(--focus-ring);
+  --color-status-available: var(--status-available);
+
+  /* shadcn/ui primitive aliases mapped onto the semantic tokens */
+  --color-foreground: var(--text-primary);
+  --color-primary: var(--text-primary);
+  --color-primary-foreground: var(--background);
+  --color-secondary: var(--surface-subtle);
+  --color-secondary-foreground: var(--text-primary);
+  --color-muted: var(--surface-subtle);
+  --color-muted-foreground: var(--text-muted);
+  --color-accent-foreground: var(--background);
+  --color-card: var(--surface);
+  --color-card-foreground: var(--text-primary);
+  --color-input: var(--border);
+  --color-ring: var(--focus-ring);
 }
 
 @layer base {
-  * {
-    @apply border-border;
+  *,
+  ::before,
+  ::after {
+    border-color: var(--border);
   }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background font-sans text-copy-primary antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
   }
 }

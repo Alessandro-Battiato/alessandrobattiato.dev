@@ -52,6 +52,9 @@ The following roles must be available in both themes:
 - `--accent-soft` — subtle accent backgrounds.
 - `--accent-secondary` — orange secondary accent.
 - `--focus-ring` — visible keyboard focus indicator.
+- `--status-available` — green availability indicator (hero "Available" dot only).
+
+Tailwind utility names: `bg-background`, `bg-surface`, `bg-surface-elevated`, `bg-surface-subtle`, `border-border`, `border-border-subtle`, `text-copy-primary|secondary|muted|faint` (for the `--text-*` tokens), `text-accent`, `bg-accent-soft`, `bg-status-available`, etc. Fonts: `font-serif` (Instrument Serif), `font-sans` (DM Sans), `font-mono` (JetBrains Mono).
 
 Do not use low-contrast text for essential information. Faint colors are reserved for decoration, never for important content or interactive controls.
 

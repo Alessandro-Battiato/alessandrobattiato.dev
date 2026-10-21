@@ -17,7 +17,8 @@
 ## Styling
 
 - Use CSS custom property tokens defined in `index.css` — no raw Tailwind color classes like `zinc-*` or hardcoded hex values.
-- Reference tokens through their Tailwind utility names: `bg-base`, `text-copy-primary`, `border-surface-border`, `text-brand`, etc.
+- Reference tokens through their Tailwind utility names: `bg-background`, `bg-surface`, `text-copy-primary`, `border-border`, `text-accent`, etc. (full list in `ui-context.md`).
+- Tailwind v4 is configured CSS-first in `src/index.css` (`@theme`); there is no `tailwind.config.js`.
 - Maintain the border radius scale: `rounded-xl` for small elements, `rounded-2xl` for cards, `rounded-3xl` for modals.
 
 ## File Organization
