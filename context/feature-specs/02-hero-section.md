@@ -1,6 +1,6 @@
 ### Navbar
 
-Create `src/components/Navbar/Navbar.tsx`.
+Create `src/layout/Navbar.tsx`.
 
 Requirements:
 
@@ -14,16 +14,23 @@ Requirements:
     - 04 Experience
     - 05 Now
     - 06 Talk
-  - A button that switches the existing theme which says "Dark Mode" or "Light Mode" accordingly to the current activated mode, also has a pulse accent token colored ball.
+  - A button that switches the existing theme which says "Dark Mode" or "Light Mode" accordingly to the current activated mode, with a static glowing (not pulsing) accent token colored ball. The button uses a pointer cursor.
+- the theme toggle lives in `src/layout/ThemeToggle.tsx`; theme state is owned by the navbar and passed to every toggle instance.
+- the navbar's bottom edge uses the line token (`border-border`), clearly visible in both themes.
+- the navbar is a see-through "dark glass" bar: a translucent background (`bg-surface-glass`) with no backdrop blur, so content scrolling underneath stays visible but dimmed.
+- below the `xl` breakpoint the section links collapse into a burger button that opens a right-side drawer (`src/layout/MobileNav.tsx`, built on the `Sheet` primitive in `src/components/ui/sheet.tsx`):
+  - lists the same numbered links; selecting one closes the drawer and scrolls to the section.
+  - closes on Escape, overlay click, or the close button; focus is trapped while open.
+  - below the `sm` breakpoint the theme toggle moves from the navbar into the drawer.
 
 ### Hero Section
 
-Create `src/components/Hero/Hero.tsx`.
+Create `src/sections/Hero.tsx`.
 
 Requirements:
 
 - left section contains the following:
-  - pulse green ball beside an helper text saying: "Available for Product Collaborations"
+  - pulse green ball beside an helper text saying: "Available for Product Collaborations" (the only pulsing element on the page)
   - subtitle saying: "Product Engineer"
   - title saying: "Alessandro Battiato"
 - then we have a separator for the following items:

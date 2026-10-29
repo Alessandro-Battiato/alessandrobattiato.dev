@@ -37,6 +37,11 @@ Project-specific styling, layout changes, and feature logic must be implemented 
 
 Only modify these files when a task explicitly requires it.
 
+Authorised changes so far:
+
+- `button.tsx` — `outline` / `ghost` hover use `bg-surface-elevated` + `text-copy-primary` instead of `bg-accent` (our accent is the brand blue, not a hover surface).
+- `sheet.tsx` — added for the mobile drawer; overlay uses `bg-overlay` instead of `bg-black/50`.
+
 ## Keeping Docs In Sync
 
 Update the relevant context file whenever implementation changes:

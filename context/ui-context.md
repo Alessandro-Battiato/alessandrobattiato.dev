@@ -25,9 +25,12 @@ The portfolio supports both light and dark themes. Both themes share the same ty
 
 | Role               | Value     | Usage                                                  |
 | ------------------ | --------- | ------------------------------------------------------ |
-| Primary brand      | `#0D0E11` | Core brand reference and dark neutral                  |
-| Interactive accent | `#2563EB` | Links, active states, markers, and interactive details |
-| Neutral            | `#8A8F98` | Neutral palette reference                              |
+| Primary brand      | `#0A0D12` | Core brand reference and dark neutral (cool slate tint) |
+| Interactive accent | `#2563EB` | Light-theme accent: links, active states, markers       |
+| Accent (dark)      | `#60A5FA` | Dark-theme accent, lifted for contrast on `#0A0D12`     |
+| Neutral            | `#8B98A9` | Neutral palette reference (slate-tinted grey)           |
+
+The palette is cool and slate-tinted, matched to the reference screenshot in `src/assets/`. Neutrals lean slightly blue rather than pure grey.
 
 The interface is predominantly neutral. Blue is the primary accent and should be used selectively.
 
@@ -41,8 +44,10 @@ The following roles must be available in both themes:
 - `--surface` — cards and primary content surfaces.
 - `--surface-elevated` — elevated cards, popovers, and overlays.
 - `--surface-subtle` — secondary section backgrounds and quiet UI areas.
-- `--border` — default borders and dividers.
-- `--border-subtle` — low-emphasis separators.
+- `--surface-glass` — translucent "dark glass" chrome (navbar); derived from `--background`, no blur.
+- `--overlay` — scrim behind modal surfaces such as the mobile drawer.
+- `--border` — every standalone line: navbar edge, section separators, list dividers, drawer edges. Must stay clearly visible in both themes.
+- `--border-subtle` — outlines of filled controls only (badges, pills), where the fill already separates the element. Never a standalone line.
 - `--text-primary` — headings and primary content.
 - `--text-secondary` — supporting body copy.
 - `--text-muted` — metadata and secondary labels.
@@ -50,11 +55,27 @@ The following roles must be available in both themes:
 - `--accent` — primary blue interactive accent.
 - `--accent-hover` — hover state for interactive accents.
 - `--accent-soft` — subtle accent backgrounds.
+- `--accent-border` — borders of accent-tinted badges.
 - `--accent-secondary` — orange secondary accent.
 - `--focus-ring` — visible keyboard focus indicator.
 - `--status-available` — green availability indicator (hero "Available" dot only).
+- `--destructive` — error and destructive states only (e.g. form validation). Not a design accent; never decorative.
 
 Tailwind utility names: `bg-background`, `bg-surface`, `bg-surface-elevated`, `bg-surface-subtle`, `border-border`, `border-border-subtle`, `text-copy-primary|secondary|muted|faint` (for the `--text-*` tokens), `text-accent`, `bg-accent-soft`, `bg-status-available`, etc. Fonts: `font-serif` (Instrument Serif), `font-sans` (DM Sans), `font-mono` (JetBrains Mono).
+
+### Non-Color Tokens
+
+Repeated or meaningful sizes are tokens in `index.css`, not arbitrary values:
+
+- `max-w-page` — page container width (`--container-page`).
+- `h-nav` — navbar height (`--spacing-nav`); `min-h-below-nav` fills the viewport under the navbar.
+- `gutter-chrome` / `gutter-content` — horizontal page gutters for navbar chrome and section content.
+- `text-display` — fluid hero display size with its line height and tracking.
+- `text-lead` — large lead paragraph size.
+- `text-2xs` + `tracking-label` — compact uppercase mono labels and badges.
+- `shadow-glow-accent` — soft static accent glow for indicator dots.
+
+Avoid one-off arbitrary values (`text-[…]`, `max-w-[…]`, hex colors) in components. If a value repeats or carries meaning, add a token.
 
 Do not use low-contrast text for essential information. Faint colors are reserved for decoration, never for important content or interactive controls.
 
@@ -96,7 +117,7 @@ Load fonts through `index.html` or a dedicated font stylesheet. Define reusable 
 - Prefer restrained corner radii.
 - Use smaller radii for controls and compact UI elements.
 - Use moderate radii for cards where present in the reference design.
-- Avoid excessively rounded panels and pill-shaped containers unless explicitly required by the design.
+- Avoid excessively rounded panels and pill-shaped containers unless explicitly required by the design. The reference uses pills (`rounded-full`) only for the navbar badge and theme toggle; stack/tag badges use `rounded-md`.
 - Keep shadows subtle and limited to elements that need clear elevation.
 
 ## 3D Animations
@@ -114,8 +135,9 @@ Load fonts through `index.html` or a dedicated font stylesheet. Define reusable 
 - Use Tailwind CSS for styling.
 - Use shadcn/ui selectively for accessible primitives when they fit the design.
 - Keep the visual language custom to the portfolio rather than applying a default shadcn dashboard appearance.
-- Place reusable UI primitives in `components/ui/`.
-- Keep portfolio sections in `components/sections/` and 3D-specific components in `components/3d/`.
+- Place reusable UI primitives in `components/ui/` and 3D-specific building blocks in `components/3d/`.
+- Keep portfolio sections in `sections/` and the page frame (navbar, mobile drawer, theme toggle) in `layout/`, both siblings of `components/`.
+- The `Button` primitive's `outline` / `ghost` hovers use `bg-surface-elevated` (patched from shadcn's `bg-accent`, which would be our blue).
 - Use semantic theme tokens for all shared UI colors.
 
 ## Accessibility and Responsiveness

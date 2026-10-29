@@ -1,50 +1,72 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* Semantic theme tokens: light values in :root, dark overrides in .dark */
 :root {
-  --background: #f7f7f5;
+  --background: #f6f7f9;
   --surface: #ffffff;
   --surface-elevated: #ffffff;
-  --surface-subtle: #efefec;
-  --border: #e0e1e4;
-  --border-subtle: #ebecee;
-  --text-primary: #0d0e11;
-  --text-secondary: #3a3e46;
-  --text-muted: #5c616a;
-  --text-faint: #a3a7ae;
+  --surface-subtle: #eef1f5;
+  --surface-glass: color-mix(in oklab, var(--background) 72%, transparent);
+  --overlay: color-mix(in oklab, #0a0d12 40%, transparent);
+  --border: #dde2e8;
+  --border-subtle: #e8ecf1;
+  --text-primary: #0a0d12;
+  --text-secondary: #334155;
+  --text-muted: #526074;
+  --text-faint: #94a3b8;
   --accent: #2563eb;
   --accent-hover: #1d4ed8;
   --accent-soft: #e6eefd;
+  --accent-border: #bfd3fb;
   --accent-secondary: #ea580c;
   --focus-ring: #2563eb;
-  --status-available: #16a34a;
+  --status-available: #059669;
+  --destructive: #dc2626;
 }
 
 .dark {
-  --background: #0d0e11;
-  --surface: #13151a;
-  --surface-elevated: #191c22;
-  --surface-subtle: #111318;
-  --border: #23262e;
-  --border-subtle: #1a1d23;
-  --text-primary: #f2f4f8;
-  --text-secondary: #c3c7cf;
-  --text-muted: #8a8f98;
-  --text-faint: #4b5059;
-  --accent: #5b93f5;
-  --accent-hover: #7ea9f7;
-  --accent-soft: #14213b;
+  --background: #0a0d12;
+  --surface: #10141c;
+  --surface-elevated: #151a23;
+  --surface-subtle: #0e1218;
+  --overlay: color-mix(in oklab, #000000 60%, transparent);
+  --border: #2c3340;
+  --border-subtle: #1c2129;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #8b98a9;
+  --text-faint: #526074;
+  --accent: #60a5fa;
+  --accent-hover: #93c5fd;
+  --accent-soft: #0e1931;
+  --accent-border: #1b3358;
   --accent-secondary: #f97316;
-  --focus-ring: #5b93f5;
-  --status-available: #22c55e;
+  --focus-ring: #60a5fa;
+  --status-available: #10b981;
+  --destructive: #f87171;
 }
 
 @theme {
   --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Layout */
+  --container-page: 100rem;
+  --spacing-nav: 4.5rem;
+
+  /* Type scale additions */
+  --text-2xs: 0.6875rem;
+  --text-2xs--line-height: 1rem;
+  --text-lead: 1.75rem;
+  --text-lead--line-height: 1.25;
+  --text-display: clamp(3.5rem, 12vw, 10.5rem);
+  --text-display--line-height: 0.9;
+  --text-display--letter-spacing: -0.03em;
+  --tracking-label: 0.12em;
 }
 
 @theme inline {
@@ -52,6 +74,8 @@
   --color-surface: var(--surface);
   --color-surface-elevated: var(--surface-elevated);
   --color-surface-subtle: var(--surface-subtle);
+  --color-surface-glass: var(--surface-glass);
+  --color-overlay: var(--overlay);
   --color-border: var(--border);
   --color-border-subtle: var(--border-subtle);
   --color-copy-primary: var(--text-primary);
@@ -61,9 +85,14 @@
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
   --color-accent-soft: var(--accent-soft);
+  --color-accent-border: var(--accent-border);
   --color-accent-secondary: var(--accent-secondary);
   --color-focus-ring: var(--focus-ring);
   --color-status-available: var(--status-available);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--background);
+
+  --shadow-glow-accent: 0 0 8px 1px var(--accent);
 
   /* shadcn/ui primitive aliases mapped onto the semantic tokens */
   --color-foreground: var(--text-primary);
@@ -80,11 +109,38 @@
   --color-ring: var(--focus-ring);
 }
 
+/* Horizontal page gutters: navbar chrome sits wider than section content, as in the reference. */
+@utility gutter-chrome {
+  padding-inline: 1.5rem;
+
+  @variant lg {
+    padding-inline: 5rem;
+  }
+}
+
+@utility gutter-content {
+  padding-inline: 1.5rem;
+
+  @variant lg {
+    padding-inline: 7rem;
+  }
+}
+
+/* Full viewport height minus the sticky navbar. */
+@utility min-h-below-nav {
+  min-height: calc(100svh - var(--spacing-nav));
+}
+
 @layer base {
   *,
   ::before,
   ::after {
     border-color: var(--border);
+  }
+
+  html {
+    /* Keep anchor targets clear of the sticky navbar. */
+    scroll-padding-top: var(--spacing-nav);
   }
 
   body {
