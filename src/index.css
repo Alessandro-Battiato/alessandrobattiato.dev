@@ -21,6 +21,7 @@
   --accent-hover: #1d4ed8;
   --accent-soft: #e6eefd;
   --accent-border: #bfd3fb;
+  --hero-glow: rgb(37 99 235 / 0.2);
   --accent-secondary: #ea580c;
   --focus-ring: #2563eb;
   --status-available: #059669;
@@ -43,6 +44,7 @@
   --accent-hover: #93c5fd;
   --accent-soft: #0e1931;
   --accent-border: #1b3358;
+  --hero-glow: rgb(37 99 235 / 0.125);
   --accent-secondary: #f97316;
   --focus-ring: #60a5fa;
   --status-available: #10b981;
@@ -124,6 +126,34 @@
   @variant lg {
     padding-inline: 7rem;
   }
+}
+
+/*
+ * Soft blue glow behind the hero, measured from the reference screenshot:
+ * a circle centred at 66% across / 42% down the hero, about 52vw wide,
+ * with a bell-shaped (not linear) falloff. Stops approximate that curve.
+ */
+@utility hero-glow {
+  position: absolute;
+  z-index: -10;
+  left: 66%;
+  top: 42%;
+  width: 52vw;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  pointer-events: none;
+  background: radial-gradient(
+    circle closest-side,
+    var(--hero-glow) 0%,
+    color-mix(in srgb, var(--hero-glow) 81%, transparent) 22%,
+    color-mix(in srgb, var(--hero-glow) 67%, transparent) 33%,
+    color-mix(in srgb, var(--hero-glow) 48%, transparent) 44%,
+    color-mix(in srgb, var(--hero-glow) 32%, transparent) 56%,
+    color-mix(in srgb, var(--hero-glow) 20%, transparent) 67%,
+    color-mix(in srgb, var(--hero-glow) 9%, transparent) 78%,
+    color-mix(in srgb, var(--hero-glow) 3%, transparent) 89%,
+    transparent 100%
+  );
 }
 
 /* Full viewport height minus the sticky navbar. */

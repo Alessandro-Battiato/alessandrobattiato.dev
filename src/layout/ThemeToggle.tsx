@@ -1,6 +1,6 @@
 import { Button } from "../components/ui/button";
 import { cn } from "../lib/utils";
-import type { Theme } from "../lib/theme";
+import type { Theme } from "../hooks/useTheme";
 
 interface ThemeToggleProps {
   theme: Theme;

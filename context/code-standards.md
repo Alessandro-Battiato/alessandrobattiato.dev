@@ -32,6 +32,7 @@
 - `components/3d/` — React Three Fiber scenes, objects, materials, and 3D-specific components.
 - `sections/` — page parts: one file per portfolio section, such as Hero, About, Experience, Case Study, and Contact.
 - `layout/` — page frame shared across sections: navbar, mobile navigation drawer, theme toggle. A piece used only by the layout stays here until something else needs it, then moves to `components/`.
-- `lib/` — shared utilities, constants, and client-side helpers.
+- `hooks/` — custom React hooks, one hook per file named after it (`useTheme.ts`). A hook's own types and constants live in its file.
+- `lib/` — shared utilities and constants; plain TypeScript with no React hooks.
 - `assets/` — imported static assets such as images, icons, and fonts.
 - `public/` — static files that need to be served directly, such as 3D models and public images.

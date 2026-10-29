@@ -19,7 +19,7 @@ Update this file whenever the current phase, active feature, or implementation s
   - `src/layout/MobileNav.tsx` — burger button below `xl` opening a right-side drawer with the numbered links (closes on link click / Escape / overlay); hosts the theme toggle below `sm`.
   - `src/components/ui/sheet.tsx` — shadcn-style Sheet primitive on `@radix-ui/react-dialog`; overlay and surface use semantic tokens (`bg-overlay`, `bg-surface-elevated`) instead of shadcn's default `bg-black/50`.
   - `src/sections/Hero.tsx` — availability label with pulsing green dot, "Product Engineer" subtitle, "Alessandro Battiato" display title, separator, positioning paragraph with accent highlight, stack badges, location helper text.
-  - `src/lib/theme.ts` — `useTheme` hook: initial theme from stored preference, falling back to `prefers-color-scheme`; persists the user's choice in `localStorage` (`theme` key). An inline script in `index.html` applies the theme before first paint to prevent a flash.
+  - `src/hooks/useTheme.ts` — `useTheme` hook: initial theme from stored preference, falling back to `prefers-color-scheme`; persists the user's choice in `localStorage` (`theme` key). An inline script in `index.html` applies the theme before first paint to prevent a flash.
 - Foundation fixes required to build the hero:
   - Migrated to Tailwind CSS v4 (the installed version): `@tailwindcss/vite` plugin, CSS-first config in `src/index.css`; removed the v3 `tailwind.config.js` / CommonJS `postcss.config.js` and the unused `autoprefixer` / `postcss` dependencies.
   - Rewrote `src/index.css` with the semantic tokens from `ui-context.md` (light in `:root`, dark in `.dark`) and mapped shadcn primitive aliases onto them.
@@ -39,6 +39,8 @@ Update this file whenever the current phase, active feature, or implementation s
   - `Button` primitive patched (authorised): `outline` / `ghost` hover to `bg-surface-elevated`; the per-component hover overrides were removed.
   - Added `--destructive` (light `#dc2626`, dark `#f87171`) for error states only, completing the shadcn `destructive` variants.
   - Availability helper text stays `text-copy-muted` (deliberately brighter than the reference's faint tone, for readability).
+- Hooks folder: `useTheme` moved from `src/lib/theme.ts` to `src/hooks/useTheme.ts`; `lib/` is now plain TypeScript only (architecture, code standards, and `index.html` comment updated).
+- Hero radial glow: measured from the reference screenshot and reproduced with the `hero-glow` utility + `--hero-glow` token. At the reference's 1753×1402 size the rendered blue channel is within 1–2 units of the screenshot along both axes. Light mode uses 20% opacity (7% was invisible on the light background; 20% was chosen by comparing 14/20/26% renders). The Hero now has a full-width `relative isolate overflow-hidden` wrapper with the content container inside it.
   - `html` has `scroll-padding-top: var(--spacing-nav)` so anchor targets are not hidden under the sticky navbar.
   - Added `tw-animate-css`: provides the drawer's enter/exit animations and the `accordion-down/up` keyframes the existing Accordion primitive referenced but never had.
   - ESLint reviewed: ESLint 10 flat config with `defineConfig` (not the deprecated `tseslint.config()`), `reactHooks.configs.flat.recommended` and `reactRefresh.configs.vite` are the current documented presets, all plugin peer ranges are satisfied, no deprecated rules in use. `npm audit fix` bumped `zod` (dev-only, via `eslint-plugin-react-hooks`) to clear a high-severity advisory.
@@ -50,7 +52,7 @@ Update this file whenever the current phase, active feature, or implementation s
 ## Open Questions
 
 - Section anchors `#how-i-work`, `#case-study`, `#experience`, `#now`, `#talk` are linked from the navbar but the sections do not exist yet.
-- The reference screenshot shows a soft blue radial glow on the right of the hero; it is not in the spec and was left out (likely the future React Three Fiber visual slot).
+- The hero glow is currently static CSS. If the React Three Fiber visual lands in the same spot, decide whether it replaces the glow or sits on top of it.
 
 ## Architecture Decisions
 
@@ -61,4 +63,4 @@ Update this file whenever the current phase, active feature, or implementation s
 ## Session Notes
 
 - `npx tsc -b`, `npm run lint`, and `npm run build` all pass; `npm audit` reports 0 vulnerabilities.
-- Hero verified visually in both themes against `src/assets/Screenshot 2026-10-14 161052.png`; mobile drawer (open, focus trap, close on link) and the see-through navbar verified in headless Chrome.
+- Hero verified visually in both themes against the Stitch reference screenshot (not kept in the repo; its sampled values are recorded in `ui-context.md` and the hero spec); mobile drawer (open, focus trap, close on link) and the see-through navbar verified in headless Chrome.

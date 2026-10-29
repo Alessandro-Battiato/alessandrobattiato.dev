@@ -12,7 +12,7 @@ import {
 } from "../components/ui/sheet";
 import ThemeToggle from "./ThemeToggle";
 import { NAV_LINKS } from "../lib/navigation";
-import type { Theme } from "../lib/theme";
+import type { Theme } from "../hooks/useTheme";
 
 interface MobileNavProps {
   theme: Theme;

@@ -2,7 +2,7 @@ import { Badge } from "../components/ui/badge";
 import MobileNav from "./MobileNav";
 import ThemeToggle from "./ThemeToggle";
 import { NAV_LINKS } from "../lib/navigation";
-import { useTheme } from "../lib/theme";
+import { useTheme } from "../hooks/useTheme";
 
 function Navbar() {
   const { theme, toggleTheme } = useTheme();

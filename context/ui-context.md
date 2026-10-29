@@ -30,7 +30,7 @@ The portfolio supports both light and dark themes. Both themes share the same ty
 | Accent (dark)      | `#60A5FA` | Dark-theme accent, lifted for contrast on `#0A0D12`     |
 | Neutral            | `#8B98A9` | Neutral palette reference (slate-tinted grey)           |
 
-The palette is cool and slate-tinted, matched to the reference screenshot in `src/assets/`. Neutrals lean slightly blue rather than pure grey.
+The palette is cool and slate-tinted, matched to the Google Stitch reference design (values sampled from its screenshot; the screenshot itself is not kept in the repo). Neutrals lean slightly blue rather than pure grey.
 
 The interface is predominantly neutral. Blue is the primary accent and should be used selectively.
 
@@ -56,6 +56,7 @@ The following roles must be available in both themes:
 - `--accent-hover` — hover state for interactive accents.
 - `--accent-soft` — subtle accent backgrounds.
 - `--accent-border` — borders of accent-tinted badges.
+- `--hero-glow` — peak colour of the hero's radial glow (`#2563eb` at 12.5% in dark, 20% in light: a pale tint on a light background needs more opacity to read with the same presence).
 - `--accent-secondary` — orange secondary accent.
 - `--focus-ring` — visible keyboard focus indicator.
 - `--status-available` — green availability indicator (hero "Available" dot only).
@@ -74,6 +75,7 @@ Repeated or meaningful sizes are tokens in `index.css`, not arbitrary values:
 - `text-lead` — large lead paragraph size.
 - `text-2xs` + `tracking-label` — compact uppercase mono labels and badges.
 - `shadow-glow-accent` — soft static accent glow for indicator dots.
+- `hero-glow` — the hero's decorative radial glow layer (position, size, and falloff measured from the reference).
 
 Avoid one-off arbitrary values (`text-[…]`, `max-w-[…]`, hex colors) in components. If a value repeats or carries meaning, add a token.
 

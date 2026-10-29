@@ -17,7 +17,8 @@
   - `components/3d/` — React Three Fiber scenes, 3D objects, materials, lighting, and camera logic.
 - `sections/` — Page parts: one component per portfolio section (Hero, How I Work, Case Study, ...), composed from building blocks.
 - `layout/` — Page frame shared across sections: navbar, mobile drawer, theme toggle.
-- `lib/` — Shared client-side utilities, constants, and helper functions.
+- `hooks/` — Custom React hooks (stateful, React-dependent logic such as `useTheme`).
+- `lib/` — Shared client-side utilities, constants, and helper functions. Plain TypeScript, no React hooks.
 - `public/` — Static assets such as images, fonts, and icons.
 
 ## 3D Model
@@ -48,4 +49,4 @@
 4. UI components remain independent from the 3D rendering layer where possible.
 5. Static assets are kept separate from application logic.
 6. Interactive 3D elements enhance the portfolio experience without becoming necessary for navigation or content consumption.
-7. Dependencies flow one way: `sections/` and `layout/` import from `components/` and `lib/`; `components/` never imports from `sections/` or `layout/`.
+7. Dependencies flow one way: `sections/` and `layout/` import from `components/`, `hooks/`, and `lib/`; `components/` never imports from `sections/` or `layout/`; `lib/` imports from nothing app-level.
