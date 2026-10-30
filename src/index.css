@@ -59,6 +59,8 @@
   /* Layout */
   --container-page: 100rem;
   --spacing-nav: 4.5rem;
+  /* Height reserved above the hero text for the globe below lg (hero top padding included). */
+  --spacing-hero-globe: clamp(18rem, 75vw, 26rem);
 
   /* Type scale additions */
   --text-2xs: 0.6875rem;
@@ -129,15 +131,44 @@
 }
 
 /*
+ * Decorative layer behind the hero text (glow + 3D globe). Below lg: a
+ * viewport-wide band filling the area reserved above the hero text, so the
+ * whole globe fits above the copy. From lg: fills the hero.
+ */
+@utility hero-visual {
+  position: absolute;
+  z-index: -10;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  translate: -50% 0;
+  pointer-events: none;
+
+  @variant lg {
+    inset: 0;
+    width: auto;
+    translate: none;
+  }
+}
+
+/*
  * Soft blue glow behind the hero, measured from the reference screenshot:
- * a circle centred at 66% across / 42% down the hero, about 52vw wide,
- * with a bell-shaped (not linear) falloff. Stops approximate that curve.
+ * from lg, a circle centred at 66% across / 42% down the hero, about 52vw
+ * wide, with a bell-shaped (not linear) falloff. Stops approximate that curve.
+ * Below lg it is centred in `hero-visual`, behind the globe.
  */
 @utility hero-glow {
   position: absolute;
   z-index: -10;
-  left: 66%;
-  top: 42%;
+  left: 50%;
+  top: 50%;
+
+  @variant lg {
+    left: 66%;
+    top: 42%;
+  }
+
   width: 52vw;
   aspect-ratio: 1;
   translate: -50% -50%;

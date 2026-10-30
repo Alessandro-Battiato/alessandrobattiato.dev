@@ -2,11 +2,14 @@ import { Badge } from "../components/ui/badge";
 import MobileNav from "./MobileNav";
 import ThemeToggle from "./ThemeToggle";
 import { NAV_LINKS } from "../lib/navigation";
-import { useTheme } from "../hooks/useTheme";
+import type { Theme } from "../hooks/useTheme";
 
-function Navbar() {
-  const { theme, toggleTheme } = useTheme();
+interface NavbarProps {
+  theme: Theme;
+  onToggleTheme: () => void;
+}
 
+function Navbar({ theme, onToggleTheme }: NavbarProps) {
   return (
     <header className="sticky top-0 z-40 h-nav border-b border-border bg-surface-glass">
       <nav
@@ -39,8 +42,8 @@ function Navbar() {
         </ul>
 
         <div className="flex shrink-0 items-center gap-2">
-          <ThemeToggle theme={theme} onToggle={toggleTheme} className="hidden sm:inline-flex" />
-          <MobileNav theme={theme} onToggleTheme={toggleTheme} />
+          <ThemeToggle theme={theme} onToggle={onToggleTheme} className="hidden sm:inline-flex" />
+          <MobileNav theme={theme} onToggleTheme={onToggleTheme} />
         </div>
       </nav>
     </header>

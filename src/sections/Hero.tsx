@@ -1,5 +1,11 @@
+import { lazy, Suspense } from "react";
 import { Badge } from "../components/ui/badge";
 import { Separator } from "../components/ui/separator";
+import type { Theme } from "../hooks/useTheme";
+import { isWebGLAvailable } from "../lib/webgl";
+
+// Loaded on demand so three.js never blocks the hero's first paint.
+const Globe = lazy(() => import("../components/3d/Globe"));
 
 const STACK: string[] = [
   "React",
@@ -11,16 +17,34 @@ const STACK: string[] = [
   "AI Workflows",
 ];
 
-function Hero() {
+interface HeroProps {
+  theme: Theme;
+}
+
+function Hero({ theme }: HeroProps) {
   return (
     <section
       id="intro"
       aria-labelledby="hero-title"
       className="relative isolate overflow-hidden"
     >
-      <div className="hero-glow" aria-hidden="true" />
-
       <div className="mx-auto flex min-h-below-nav max-w-page flex-col justify-end gutter-content pt-24 pb-16 lg:pb-20">
+        {/*
+          Space above the text (top padding included). Below lg it reserves
+          room for the globe, which fits entirely inside it; from lg it is
+          static, so the visual layer fills the whole section instead.
+        */}
+        <div className="relative -mt-24 min-h-hero-globe flex-1 lg:static lg:min-h-24">
+          <div className="hero-visual" aria-hidden="true">
+            <div className="hero-glow" />
+            {isWebGLAvailable() && (
+              <Suspense fallback={null}>
+                <Globe theme={theme} />
+              </Suspense>
+            )}
+          </div>
+        </div>
+
         <p className="flex items-center gap-4 pl-1 font-mono text-sm tracking-wider text-accent sm:text-base">
           <span className="relative flex size-2.5" aria-hidden="true">
             <span className="absolute inline-flex size-full rounded-full bg-status-available opacity-60 motion-safe:animate-ping" />
