@@ -15,7 +15,7 @@ Update this file whenever the current phase, active feature, or implementation s
 - Design system and UI primitive components
 - 02 Hero Section spec (`context/feature-specs/02-hero-section.md`)
   - `src/layout/Navbar.tsx` — fixed-height sticky "dark glass" navbar (translucent `bg-surface-glass`, no blur): name, "Catania · Product Eng" accent badge, numbered section links (01–06, from `src/lib/navigation.ts`), theme toggle.
-  - `src/layout/ThemeToggle.tsx` — pill toggle labelled with the active mode, static glowing accent dot, pointer cursor. Theme state is owned once by `Navbar` and passed down, so every toggle instance stays in sync.
+  - `src/layout/ThemeToggle.tsx` — pill toggle labelled with the active mode, static glowing accent dot, pointer cursor. Theme state is owned once (now by `App`, see spec 03) and passed down, so every toggle instance stays in sync.
   - `src/layout/MobileNav.tsx` — burger button below `xl` opening a right-side drawer with the numbered links (closes on link click / Escape / overlay); hosts the theme toggle below `sm`.
   - `src/components/ui/sheet.tsx` — shadcn-style Sheet primitive on `@radix-ui/react-dialog`; overlay and surface use semantic tokens (`bg-overlay`, `bg-surface-elevated`) instead of shadcn's default `bg-black/50`.
   - `src/sections/Hero.tsx` — availability label with pulsing green dot, "Product Engineer" subtitle, "Alessandro Battiato" display title, separator, positioning paragraph with accent highlight, stack badges, location helper text.
@@ -44,6 +44,18 @@ Update this file whenever the current phase, active feature, or implementation s
   - `html` has `scroll-padding-top: var(--spacing-nav)` so anchor targets are not hidden under the sticky navbar.
   - Added `tw-animate-css`: provides the drawer's enter/exit animations and the `accordion-down/up` keyframes the existing Accordion primitive referenced but never had.
   - ESLint reviewed: ESLint 10 flat config with `defineConfig` (not the deprecated `tseslint.config()`), `reactHooks.configs.flat.recommended` and `reactRefresh.configs.vite` are the current documented presets, all plugin peer ranges are satisfied, no deprecated rules in use. `npm audit fix` bumped `zod` (dev-only, via `eslint-plugin-react-hooks`) to clear a high-severity advisory.
+- 03 Hero Globe spec (`context/feature-specs/03-hero-globe.md`)
+  - Installed `@react-three/fiber` 9, `three` r187, `@types/three`.
+  - `src/components/3d/Globe.tsx` — R3F port of the Stitch three.js r125 globe: wireframe icosahedron, two orbital rings, 1800-particle "breathing" core, ambient + two point lights. Placed on the centre of the hero glow (66% / 42%) from 1024px up; below that (narrow layout, revised twice after 375px reviews: first the core overlapped the availability label, then the rings were clipped) the hero reserves a globe area above the text (`min-h-hero-globe`, `clamp(18rem, 75vw, 26rem)`, top padding included), the canvas fills that band (`hero-visual`), and the whole sculpture is scaled to fit it, rings and perspective included (extent radius 4.7, 92% fit). The text moves down by that height on phones. The glow follows the globe below `lg`. Verified at 375×812, 768×1024, 1600×1000.
+  - Theme switch: the scene takes `theme` as a prop and reads every value from a per-theme `PALETTES` constant, so wireframe, both rings (colour and opacity), all three lights, and particle opacity update. Particle colours are rebuilt from a stored per-particle brightness on every switch, not computed once.
+  - Refresh-rate independence: all motion uses an elapsed-seconds accumulator (delta capped at 0.1 s); the mouse tilt uses `MathUtils.damp` with a rate that matches the original 0.04-per-frame lerp at 60 fps.
+  - Seeded particles: `src/lib/random.ts` (mulberry32) replaces `Math.random`; fixed seed, so the layout is the same on every visit.
+  - Mouse: window-level `pointermove` (the canvas has `pointer-events: none` and sits behind the content).
+  - Progressive loading: `Globe` is `React.lazy`-loaded (three.js is its own ~244 kB gzip chunk, off the initial bundle), rendered only when `src/lib/webgl.ts` detects WebGL; otherwise only the CSS glow shows. `src/hooks/usePrefersReducedMotion.ts` freezes the time-driven animation (the mouse tilt still works).
+  - Lights: r125 "legacy" lights scaled intensities by PI and had no inverse-square decay, so the port multiplies by PI and uses `decay={0}`.
+  - Deviation from the Stitch code: dark ring opacity 0.8 (was 0.4) to match the dark reference screenshot; Stitch's 0.4 rendered much fainter than the reference.
+  - Theme state lifted from `Navbar` to `App` (`Navbar` and `Hero` now take it as props) so the globe and the toggle share one source of truth.
+  - Verified in headless Chrome (SwiftShader) via CDP: both themes compared with the reference screenshots, a live toggle dark → light → dark updates all colours, and a mouse move tilts the globe. No runtime errors; the only console warning is R3F's internal use of the deprecated `THREE.Clock`.
 
 ## Next Up
 
@@ -52,13 +64,16 @@ Update this file whenever the current phase, active feature, or implementation s
 ## Open Questions
 
 - Section anchors `#how-i-work`, `#case-study`, `#experience`, `#now`, `#talk` are linked from the navbar but the sections do not exist yet.
-- The hero glow is currently static CSS. If the React Three Fiber visual lands in the same spot, decide whether it replaces the glow or sits on top of it.
+- Resolved: the globe sits on top of the static CSS hero glow (and the glow remains as the no-WebGL fallback).
+- The globe's large rings cross behind the stack badges and helper text on desktop (as in the Stitch design). Text stays readable, but confirm this is wanted.
+- Vite warns that the lazy `Globe` chunk is over 500 kB minified. It does not block first paint; consider manual chunking only if it becomes a problem.
 
 ## Architecture Decisions
 
 - Tailwind CSS v4 with CSS-first configuration (`@theme` in `index.css`); no `tailwind.config.js`.
 - Dark mode is class-based (`.dark` on `<html>`) via `@custom-variant dark`.
-- Theme state lives in a client-side hook in `lib/`; no theme provider library.
+- Theme state lives in the `useTheme` hook (`hooks/`), called once in `App` and passed down as props; no theme provider library.
+- 3D scenes are lazy-loaded building blocks in `components/3d/`; they take the theme as a prop and keep their own colour palette (WebGL can't read CSS variables).
 
 ## Session Notes
 

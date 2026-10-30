@@ -75,7 +75,9 @@ Repeated or meaningful sizes are tokens in `index.css`, not arbitrary values:
 - `text-lead` — large lead paragraph size.
 - `text-2xs` + `tracking-label` — compact uppercase mono labels and badges.
 - `shadow-glow-accent` — soft static accent glow for indicator dots.
-- `hero-glow` — the hero's decorative radial glow layer (position, size, and falloff measured from the reference).
+- `hero-glow` — the hero's decorative radial glow layer (position, size, and falloff measured from the reference). From `lg` at 66% / 42% of the hero; below `lg` centred behind the globe.
+- `hero-visual` — the hero's decorative layer (glow + globe). From `lg` it fills the hero; below `lg` it is a viewport-wide band filling the area reserved above the hero text.
+- `min-h-hero-globe` (`--spacing-hero-globe`, `clamp(18rem, 75vw, 26rem)`) — height reserved above the hero text for the globe below `lg` (hero top padding included), so the whole globe, rings included, fits without overlapping the copy.
 
 Avoid one-off arbitrary values (`text-[…]`, `max-w-[…]`, hex colors) in components. If a value repeats or carries meaning, add a token.
 
@@ -131,6 +133,9 @@ Load fonts through `index.html` or a dedicated font stylesheet. Define reusable 
 - Provide a graceful fallback when WebGL is unavailable or disabled.
 - Keep essential content, navigation, and contact links independent of 3D rendering.
 - Lazy-load expensive 3D assets where appropriate and avoid blocking initial content rendering.
+- WebGL materials cannot read CSS custom properties, so a 3D scene keeps its own per-theme palette constant inside its component (e.g. `PALETTES` in `components/3d/Globe.tsx`). This is the only allowed place for hex colors outside `index.css`. The scene receives the active theme as a prop and must update every theme-dependent value (materials, lights, vertex colors) when it changes.
+- Animations are driven by elapsed seconds and damped with `MathUtils.damp`, never by per-frame increments, so speed is identical at any refresh rate.
+- "Random" placement uses the seeded generator in `lib/random.ts`, never `Math.random`, so every visit looks the same.
 
 ## Component Library
 

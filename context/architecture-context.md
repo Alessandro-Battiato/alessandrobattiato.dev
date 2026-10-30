@@ -17,7 +17,7 @@
   - `components/3d/` — React Three Fiber scenes, 3D objects, materials, lighting, and camera logic.
 - `sections/` — Page parts: one component per portfolio section (Hero, How I Work, Case Study, ...), composed from building blocks.
 - `layout/` — Page frame shared across sections: navbar, mobile drawer, theme toggle.
-- `hooks/` — Custom React hooks (stateful, React-dependent logic such as `useTheme`).
+- `hooks/` — Custom React hooks (stateful, React-dependent logic such as `useTheme`). Theme state is owned once by `App` and passed down as props to `Navbar` and `Hero`.
 - `lib/` — Shared client-side utilities, constants, and helper functions. Plain TypeScript, no React hooks.
 - `public/` — Static assets such as images, fonts, and icons.
 
