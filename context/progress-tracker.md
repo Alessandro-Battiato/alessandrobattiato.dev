@@ -56,14 +56,23 @@ Update this file whenever the current phase, active feature, or implementation s
   - Deviation from the Stitch code: dark ring opacity 0.8 (was 0.4) to match the dark reference screenshot; Stitch's 0.4 rendered much fainter than the reference.
   - Theme state lifted from `Navbar` to `App` (`Navbar` and `Hero` now take it as props) so the globe and the toggle share one source of truth.
   - Verified in headless Chrome (SwiftShader) via CDP: both themes compared with the reference screenshots, a live toggle dark → light → dark updates all colours, and a mouse move tilts the globe. No runtime errors; the only console warning is R3F's internal use of the deprecated `THREE.Clock`.
+- Page title (browser tab) changed to "Alessandro Battiato | Product Engineer".
+- 04 Method Section spec (`context/feature-specs/04-method-section.md`)
+  - `src/sections/Method.tsx`, mounted after the Hero with `id="how-i-work"` (the navbar's "02 How I Work" anchor now resolves).
+  - New tokens: `--surface-band` (light `#f1f5f9`, dark `#0c1015`) → `bg-surface-band` for the section background; `text-heading` (fluid serif section title size, reusable by later sections). Documented in `ui-context.md`.
+  - Layout per the reference: accent mono uppercase eyebrow ("02 — Method & Philosophy" + "Integrated Execution") followed by a `Separator` line; 5/12 left column (serif title + muted subtitle), 7/12 right column with the accordion. Single column below `lg`.
+  - Accordion: reuses the `Accordion` / `AccordionItem` / `AccordionContent` primitives unchanged; the trigger is built in the section from `@radix-ui/react-accordion` (the primitive's trigger hard-codes a chevron, while the reference uses a circled +/× button), so `components/ui/accordion.tsx` was not modified. Single, collapsible, first item open by default. Closed titles are muted and brighten on hover; the open item's button turns accent and its `+` rotates to `×` (rotation is motion-safe only).
+  - Chips are accent-tinted `Badge`s (`bg-accent-soft`, `border-accent-border`, `text-accent`, `rounded-md`, mono).
+  - Verified via CDP screenshots at 1750×1300 (dark and light, with a different item opened) and 390 px mobile; section background computes to the spec colours in both themes.
 
 ## Next Up
 
-- Define and implement the next feature specification (e.g. the "How I Work" section).
+- Define and implement the next feature specification (e.g. the "Case Study" section).
 
 ## Open Questions
 
-- Section anchors `#how-i-work`, `#case-study`, `#experience`, `#now`, `#talk` are linked from the navbar but the sections do not exist yet.
+- The Method eyebrow uses an em dash ("02 — Method & …") to match the reference screenshot; the spec text writes a hyphen. Confirm.
+- Section anchors `#case-study`, `#experience`, `#now`, `#talk` are linked from the navbar but the sections do not exist yet.
 - Resolved: the globe sits on top of the static CSS hero glow (and the glow remains as the no-WebGL fallback).
 - The globe's large rings cross behind the stack badges and helper text on desktop (as in the Stitch design). Text stays readable, but confirm this is wanted.
 - Vite warns that the lazy `Globe` chunk is over 500 kB minified. It does not block first paint; consider manual chunking only if it becomes a problem.

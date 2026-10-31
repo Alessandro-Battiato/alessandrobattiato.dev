@@ -9,6 +9,7 @@
   --surface: #ffffff;
   --surface-elevated: #ffffff;
   --surface-subtle: #eef1f5;
+  --surface-band: #f1f5f9;
   --surface-glass: color-mix(in oklab, var(--background) 72%, transparent);
   --overlay: color-mix(in oklab, #0a0d12 40%, transparent);
   --border: #dde2e8;
@@ -33,6 +34,7 @@
   --surface: #10141c;
   --surface-elevated: #151a23;
   --surface-subtle: #0e1218;
+  --surface-band: #0c1015;
   --overlay: color-mix(in oklab, #000000 60%, transparent);
   --border: #2c3340;
   --border-subtle: #1c2129;
@@ -70,6 +72,9 @@
   --text-display: clamp(3.5rem, 12vw, 10.5rem);
   --text-display--line-height: 0.9;
   --text-display--letter-spacing: -0.03em;
+  --text-heading: clamp(3rem, 6vw, 5.5rem);
+  --text-heading--line-height: 1.05;
+  --text-heading--letter-spacing: -0.02em;
   --tracking-label: 0.12em;
 }
 
@@ -78,6 +83,7 @@
   --color-surface: var(--surface);
   --color-surface-elevated: var(--surface-elevated);
   --color-surface-subtle: var(--surface-subtle);
+  --color-surface-band: var(--surface-band);
   --color-surface-glass: var(--surface-glass);
   --color-overlay: var(--overlay);
   --color-border: var(--border);

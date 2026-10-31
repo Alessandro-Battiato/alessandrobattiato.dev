@@ -44,6 +44,7 @@ The following roles must be available in both themes:
 - `--surface` — cards and primary content surfaces.
 - `--surface-elevated` — elevated cards, popovers, and overlays.
 - `--surface-subtle` — secondary section backgrounds and quiet UI areas.
+- `--surface-band` — background of alternating content sections (e.g. Method), giving a subtle contrast with the adjacent `--background` sections (light `#F1F5F9`, dark `#0C1015`).
 - `--surface-glass` — translucent "dark glass" chrome (navbar); derived from `--background`, no blur.
 - `--overlay` — scrim behind modal surfaces such as the mobile drawer.
 - `--border` — every standalone line: navbar edge, section separators, list dividers, drawer edges. Must stay clearly visible in both themes.
@@ -72,6 +73,7 @@ Repeated or meaningful sizes are tokens in `index.css`, not arbitrary values:
 - `h-nav` — navbar height (`--spacing-nav`); `min-h-below-nav` fills the viewport under the navbar.
 - `gutter-chrome` / `gutter-content` — horizontal page gutters for navbar chrome and section content.
 - `text-display` — fluid hero display size with its line height and tracking.
+- `text-heading` — fluid serif section title size (`clamp(3rem, 6vw, 5.5rem)`) with its line height and tracking.
 - `text-lead` — large lead paragraph size.
 - `text-2xs` + `tracking-label` — compact uppercase mono labels and badges.
 - `shadow-glow-accent` — soft static accent glow for indicator dots.

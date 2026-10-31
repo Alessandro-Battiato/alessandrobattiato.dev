@@ -1,4 +1,5 @@
 import Hero from './sections/Hero'
+import Method from './sections/Method'
 import Navbar from './layout/Navbar'
 import { useTheme } from './hooks/useTheme'
 
@@ -10,6 +11,7 @@ function App() {
       <Navbar theme={theme} onToggleTheme={toggleTheme} />
       <main>
         <Hero theme={theme} />
+        <Method />
       </main>
     </>
   )
